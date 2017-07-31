@@ -7,7 +7,7 @@ class Line
   @@channel_access_token = ENV["CHANNEL_ACCESS_TOKEN"]
 
   def response req
-    line_request = JSON.parse(req.body.read)
+    line_request = req
     p line_request
     line_request["events"].each do |event|
 
