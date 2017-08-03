@@ -1,6 +1,8 @@
 require 'dotenv'
 require 'faraday'
 
+Dotenv.load ".env"
+
 class Slack
   @@slack_incoming_webhook = ENV["SLACK_INCOMING_WEBHOOK"]
 
