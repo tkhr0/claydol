@@ -2,6 +2,7 @@
 source "https://rubygems.org"
 
 gem "rack"
+gem "rack-parser", require: "rack/parser"
 gem "faraday"
 gem "dotenv"
 

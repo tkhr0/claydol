@@ -16,6 +16,8 @@ GEM
       byebug (~> 9.0)
       pry (~> 0.10)
     rack (2.0.3)
+    rack-parser (0.7.0)
+      rack
     slop (3.6.0)
 
 PLATFORMS
@@ -27,6 +29,7 @@ DEPENDENCIES
   pry
   pry-byebug
   rack
+  rack-parser
 
 BUNDLED WITH
    1.15.3
