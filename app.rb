@@ -22,9 +22,8 @@ class App
     p env["HTTP_X_LINE_SIGNATURE"]
     p @@channel_access_token
 
+
     req = Rack::Request.new env
-    params = req.params.update(JSON.parse(req.body.read))
-    req.body.rewind
 
     p req
 
@@ -32,8 +31,8 @@ class App
     slack = Slack.new
 
     if req.post?
-      line.response params
-      slack.response params
+      line.response req.params
+      slack.response req.params
 
     elsif req.get?
       query_parser = Rack::QueryParser.make_default 10, 10
