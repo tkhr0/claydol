@@ -11,11 +11,10 @@ class Slack
       builder.use Faraday::Request::UrlEncoded  # リクエストパラメータを URL エンコードする
       builder.use Faraday::Response::Logger     # リクエストを標準出力に出力する
       builder.use Faraday::Adapter::NetHttp     # Net/HTTP をアダプターに使う
-
     end
 
-    slack_res = conn.post do |slack_res|
-      slack_res.body = "payload=" + JSON.dump({
+    slack_res = conn.post do |res|
+      res.body = "payload=" + JSON.dump({
         text: 'foo'
       })
     end
