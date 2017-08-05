@@ -31,8 +31,9 @@ class App
     slack = Slack.new
 
     if req.post?
-      line.response req.params
-      slack.response req.params
+      # line.response req.params
+      slack.listen req.params
+      slack.talk
 
     elsif req.get?
       query_parser = Rack::QueryParser.make_default 10, 10
