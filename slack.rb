@@ -16,13 +16,11 @@ class Slack < Adapter
   end
 
   def encode
-    {
-      'text': synapse.message,
-    }
+    "payload=" + JSON.dump(
+      {
+        'text': synapse.message,
+      }
+    )
   end
 
-  def talk
-    set_body "payload=" + JSON.dump(encode)
-    super
-  end
 end
