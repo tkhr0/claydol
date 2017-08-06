@@ -1,7 +1,11 @@
 class Synapse
 
-  def initialize
+  def initialize synapse=nil
     @data = {}
+
+    unless synapse.nil?
+      trace synapse
+    end
   end
 
   def message= text
@@ -12,4 +16,18 @@ class Synapse
     @data[:message]
   end
 
+  def response= text
+    @data[:response] = text
+  end
+
+  def response
+    @data[:response]
+  end
+
+  private
+
+  def trace synapse
+    self.message = synapse.message
+    self.response = synapse.response
+  end
 end
