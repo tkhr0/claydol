@@ -11,8 +11,8 @@ class Adapter
   }
 
   # send message to chat client
-  def talk
-    set_body encode
+  def talk synapse
+    set_body encode synapse
     request
   end
 
@@ -28,7 +28,7 @@ class Adapter
   end
 
   # encode synapse to request body
-  def encode
+  def encode synapse
   end
 
   # add request header to talk

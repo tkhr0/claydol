@@ -13,12 +13,13 @@ class Slack < Adapter
 
   def decode params
     synapse.message = params["text"]
+    synapse
   end
 
-  def encode
+  def encode synapse
     "payload=" + JSON.dump(
       {
-        'text': synapse.message,
+        'text': synapse.response,
       }
     )
   end

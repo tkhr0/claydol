@@ -9,6 +9,7 @@ require 'faraday'
 require 'dotenv'
 require './slack'
 require './line'
+require './gatekeeper'
 
 require 'pry'
 
@@ -30,10 +31,23 @@ class App
     line = Line.new
     slack = Slack.new
 
+    p req.params
+
+    gatekeeper = Gatekeeper.new
+    gatekeeper.load_golems
+
     if req.post?
+
+
       # line.response req.params
-      slack.listen req.params
-      slack.talk
+      synapse = slack.listen req.params
+      # slack.talk
+
+      responses = gatekeeper.distribute synapse
+
+      responses.each do |synapse|
+        slack.talk synapse
+      end
 
     elsif req.get?
       query_parser = Rack::QueryParser.make_default 10, 10
