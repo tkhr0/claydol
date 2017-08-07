@@ -1,8 +1,7 @@
 require 'dotenv'
-require './adapter'
+require_relative './adapter'
 require 'json'
 
-Dotenv.load '.env'
 
 
 class Slack < Adapter

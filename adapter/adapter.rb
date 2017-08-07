@@ -1,10 +1,10 @@
 require 'faraday'
-require './synapse'
+require_relative '../synapse'
 
 class Adapter
   attr_accessor :endpoint
 
-  @@synapse = nil
+  @synapse = nil
   @@request_options = {
     headers: {},
     body: "",
@@ -19,6 +19,18 @@ class Adapter
   # receive message from chat client
   def listen params
     decode params
+  end
+
+  def filter
+    true
+  end
+
+  def self.inherited concrete_adapter_class
+    adapters << concrete_adapter_class
+  end
+
+  def self.adapters
+    @@_adapters ||= []
   end
 
   private
@@ -43,8 +55,8 @@ class Adapter
 
   # get synapse for this response
   def synapse
-    @@synapse = Synapse.new if @@synapse.nil?
-    @@synapse
+    @synapse = Synapse.new if @synapse.nil?
+    @synapse
   end
 
   # get connection for request

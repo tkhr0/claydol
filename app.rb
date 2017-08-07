@@ -7,30 +7,21 @@ require 'rack/query_parser'
 require 'json'
 require 'faraday'
 require 'dotenv'
-require './slack'
-require './line'
 require './gatekeeper'
 
 require 'pry'
 
 Dotenv.load ".env"
 
+
 class App
-  @@channel_access_token = ENV["CHANNEL_ACCESS_TOKEN"]
-  @@slack_incoming_webhook = ENV["SLACK_INCOMING_WEBHOOK"]
 
   def call(env)
-    p env["HTTP_X_LINE_SIGNATURE"]
-    p @@channel_access_token
-
+    p ENV
 
     req = Rack::Request.new env
 
     p req
-
-    line = Line.new
-    slack = Slack.new
-
     p req.params
 
     gatekeeper = Gatekeeper.new
