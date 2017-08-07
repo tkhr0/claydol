@@ -4,16 +4,21 @@ require './golem/golem'
 class Gatekeeper
   def initialize
     @golems = []
+    @adapters = []
+
     @incoming_queue = []
     @outgoing_queue = []
-
-    @adapters = []
   end
 
   def load_golems
     Dir.glob('./golem/*.rb').each do |golem|
+      next if golem == './golem/golem.rb'
       require_relative golem
     end
+
+    @golems = Golem.golems.map { |golem_class|
+      golem_class.new
+    }
   end
 
   def load_adapters
@@ -55,7 +60,7 @@ class Gatekeeper
   def distribute synapse
     responses = []
 
-    Golem.golems.each do |golem|
+    @golems.each do |golem|
       if golem.trigger.match synapse.message
 
         res_synapse = Synapse.new synapse

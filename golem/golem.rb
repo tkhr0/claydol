@@ -6,7 +6,7 @@ class Golem
   end
 
   def self.inherited concrete_golem_class
-    golems << concrete_golem_class.new
+    golems << concrete_golem_class
   end
 
   def self.golems
