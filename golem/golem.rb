@@ -1,5 +1,7 @@
 class Golem
-  def think text
+
+  def think synapse
+    #return synapse
   end
 
   def trigger

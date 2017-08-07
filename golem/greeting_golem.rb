@@ -1,5 +1,6 @@
 class GreetingGolem < Golem
   def think synapse
+    # FIXME: return Synapse
     'hello world'
   end
 
