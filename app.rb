@@ -25,26 +25,20 @@ class App
     p req.params
 
     gatekeeper = Gatekeeper.new
+    gatekeeper.load_adapters
     gatekeeper.load_golems
 
     if req.post?
-
-
-      # line.response req.params
-      synapse = slack.listen req.params
-      # slack.talk
-
-      responses = gatekeeper.distribute synapse
-
-      responses.each do |synapse|
-        slack.talk synapse
-      end
+      params = req.params
+      params.freeze
+      gatekeeper.listen params
 
     elsif req.get?
       query_parser = Rack::QueryParser.make_default 10, 10
       p query_parser.parse_nested_query req.query_string
     end
 
+    gatekeeper.main
 
     res = Rack::Response.new { |r|
       r.status = 200
