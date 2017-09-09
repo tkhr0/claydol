@@ -64,7 +64,7 @@ class Gatekeeper
       if golem.trigger.match synapse.message
 
         res_synapse = Synapse.new synapse
-        res_synapse.response = golem.think synapse  # FIXME: return Synapse directoly
+        res_synapse = golem.think synapse
 
         responses << res_synapse
       end

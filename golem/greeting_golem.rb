@@ -1,7 +1,7 @@
 class GreetingGolem < Golem
   def think synapse
-    # FIXME: return Synapse
-    'hello world'
+    synapse.response = 'hello world'
+    return synapse
   end
 
   def trigger
