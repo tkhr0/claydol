@@ -4,11 +4,13 @@ require_relative '../synapse'
 class Adapter
   attr_accessor :endpoint
 
-  @synapse = nil
-  @@request_options = {
-    headers: {},
-    body: "",
-  }
+  def initialize
+    @synapse = nil
+    @request_options = {
+      headers: {},
+      body: "",
+    }
+  end
 
   # send message to chat client
   def talk synapse
@@ -21,6 +23,7 @@ class Adapter
     decode params
   end
 
+  # return true if it can deal request.
   def filter
     true
   end
@@ -45,12 +48,12 @@ class Adapter
 
   # add request header to talk
   def add_header header
-    @@request_options[:headers].merge header
+    @request_options[:headers].update header
   end
 
   # set request body to talk
   def set_body body
-    @@request_options[:body] = body
+    @request_options[:body] = body
   end
 
   # get synapse for this response
@@ -71,7 +74,7 @@ class Adapter
   # send request
   def request
     connection.post @endpoint,
-      @@request_options[:body],
-      @@request_options[:headers]
+      @request_options[:body],
+      @request_options[:headers]
   end
 end

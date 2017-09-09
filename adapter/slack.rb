@@ -7,6 +7,7 @@ require 'json'
 class Slack < Adapter
 
   def initialize
+    super
     @endpoint = ENV["SLACK_INCOMING_WEBHOOK"]
   end
 
