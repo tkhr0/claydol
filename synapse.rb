@@ -24,6 +24,14 @@ class Synapse
     @data[:response]
   end
 
+  def token= token
+    @data[:token] = token
+  end
+
+  def token
+    @data[:token]
+  end
+
   private
 
   def trace synapse
