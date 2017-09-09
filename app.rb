@@ -31,7 +31,7 @@ class App
     if req.post?
       params = req.params
       params.freeze
-      gatekeeper.listen params
+      gatekeeper.listen req.env, params
 
     elsif req.get?
       query_parser = Rack::QueryParser.make_default 10, 10

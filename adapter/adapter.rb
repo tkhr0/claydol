@@ -3,6 +3,8 @@ require_relative '../synapse'
 
 class Adapter
   attr_accessor :endpoint
+  attr_reader :require_envs
+  attr_accessor :hash
 
   def initialize
     @synapse = nil
@@ -10,6 +12,9 @@ class Adapter
       headers: {},
       body: "",
     }
+    @require_envs = [
+      'HTTP_USER_AGENT',
+    ]
   end
 
   # send message to chat client
@@ -20,12 +25,18 @@ class Adapter
 
   # receive message from chat client
   def listen params
-    decode params
+    synapse = decode params
+    synapse.adapter = hash
+    synapse
   end
 
   # return true if it can deal request.
-  def filter
-    true
+  def filter rack_env
+    false
+  end
+
+  def append_require_env env
+    @require_envs.push env
   end
 
   def self.inherited concrete_adapter_class

@@ -10,6 +10,7 @@ class Line < Adapter
   def initialize
     super
     @endpoint = 'https://api.line.me/v2/bot/message/reply'
+    append_require_env 'HTTP_X_LINE_SIGNATURE'
   end
 
   def decode params
@@ -35,6 +36,11 @@ class Line < Adapter
         }
       ]
     })
+  end
+
+  def filter rack_env
+    ((/^LineBotWebhook/ =~ rack_env['HTTP_USER_AGENT']) != nil) \
+     && (rack_env['HTTP_X_LINE_SIGNATURE'])
   end
 
 end

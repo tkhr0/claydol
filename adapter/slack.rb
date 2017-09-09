@@ -24,4 +24,8 @@ class Slack < Adapter
     )
   end
 
+  def filter rack_env
+    ((/^Slackbot/ =~ rack_env['HTTP_USER_AGENT']) != nil)
+  end
+
 end

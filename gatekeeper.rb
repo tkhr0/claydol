@@ -1,5 +1,6 @@
 require './synapse'
 require './golem/golem'
+require 'digest/md5'
 
 class Gatekeeper
   def initialize
@@ -22,13 +23,17 @@ class Gatekeeper
   end
 
   def load_adapters
+    pathes = []
     Dir.glob('./adapter/*.rb').each do |adapter|
       next if adapter == './adapter/adapter.rb'
       require_relative adapter
+      pathes.push adapter
     end
 
-    @adapters = Adapter.adapters.map { |adapter_class|
-      adapter_class.new
+    @adapters.concat Adapter.adapters.map.with_index { |adapter_class, idx|
+      adapter = adapter_class.new
+      adapter.hash = Digest::MD5.digest pathes[idx]  # for response
+      adapter
     }
   end
 
@@ -42,9 +47,9 @@ class Gatekeeper
     end
   end
 
-  def listen params
+  def listen env, params
     @adapters.each do |adapter|
-      if adapter.filter
+      if adapter.filter extruct_env(env, adapter.require_envs)
         @incoming_queue << adapter.listen(params)
       end
     end
@@ -52,7 +57,10 @@ class Gatekeeper
 
   def talk synapse
     @adapters.each do |adapter|
-      adapter.talk synapse
+      if adapter.hash.equal? synapse.adapter
+        adapter.talk synapse
+        break
+      end
     end
   end
 
@@ -72,4 +80,12 @@ class Gatekeeper
 
     responses
   end
+
+  private
+
+    def extruct_env rack_env, require_envs
+      rack_env.select { |env|
+        require_envs.include? env
+      }
+    end
 end

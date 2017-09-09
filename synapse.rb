@@ -1,4 +1,5 @@
 class Synapse
+  attr_accessor :adapter
 
   def initialize synapse=nil
     @data = {}
