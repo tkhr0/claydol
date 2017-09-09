@@ -5,6 +5,7 @@ class Golem
   end
 
   def trigger
+    # return Regexp
   end
 
   def self.inherited concrete_golem_class
