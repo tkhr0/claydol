@@ -38,11 +38,13 @@ class Gatekeeper
   end
 
   def main
-    @incoming_queue.each do |synapse|
+    while !@incoming_queue.empty?
+      synapse = @incoming_queue.shift
       @outgoing_queue.concat distribute(synapse)
     end
 
-    @outgoing_queue.each do |synapse|
+    while !@outgoing_queue.empty?
+      synapse = @outgoing_queue.shift
       talk synapse
     end
   end

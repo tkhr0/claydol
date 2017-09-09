@@ -16,6 +16,12 @@ Dotenv.load ".env"
 
 class App
 
+  def initialize
+    @gatekeeper = Gatekeeper.new
+    @gatekeeper.load_adapters
+    @gatekeeper.load_golems
+  end
+
   def call(env)
     p ENV
 
@@ -24,21 +30,18 @@ class App
     p req
     p req.params
 
-    gatekeeper = Gatekeeper.new
-    gatekeeper.load_adapters
-    gatekeeper.load_golems
 
     if req.post?
       params = req.params
       params.freeze
-      gatekeeper.listen req.env, params
+      @gatekeeper.listen req.env, params
 
     elsif req.get?
       query_parser = Rack::QueryParser.make_default 10, 10
       p query_parser.parse_nested_query req.query_string
     end
 
-    gatekeeper.main
+    @gatekeeper.main
 
     res = Rack::Response.new { |r|
       r.status = 200
