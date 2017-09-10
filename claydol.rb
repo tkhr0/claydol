@@ -14,7 +14,7 @@ require 'pry'
 Dotenv.load ".env"
 
 
-class App
+class Claydol
 
   def initialize
     @gatekeeper = Gatekeeper.new
@@ -23,12 +23,12 @@ class App
   end
 
   def call(env)
-    p ENV
+    # p ENV
 
     req = Rack::Request.new env
 
-    p req
-    p req.params
+    # p req
+    # p req.params
 
 
     if req.post?
