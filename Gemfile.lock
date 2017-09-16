@@ -7,6 +7,7 @@ GEM
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
     method_source (0.8.2)
+    minitest (5.10.1)
     multipart-post (2.0.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
@@ -18,6 +19,7 @@ GEM
     rack (2.0.3)
     rack-parser (0.7.0)
       rack
+    rake (12.0.0)
     slop (3.6.0)
 
 PLATFORMS
@@ -26,10 +28,12 @@ PLATFORMS
 DEPENDENCIES
   dotenv
   faraday
+  minitest
   pry
   pry-byebug
   rack
   rack-parser
+  rake
 
 BUNDLED WITH
    1.15.3
