@@ -7,4 +7,8 @@ class GreetingGolem < Golem
   def trigger
     Regexp.new '^hoge.*'
   end
+
+  def understand? text
+    /^hoge.*/ === text
+  end
 end
