@@ -7,8 +7,8 @@ Dotenv.load ".env"
 class Line < Adapter
   @@channel_access_token = ENV["CHANNEL_ACCESS_TOKEN"]
 
-  def initialize
-    super
+  def initialize hash
+    super hash
     @endpoint = 'https://api.line.me/v2/bot/message/reply'
     append_require_env 'HTTP_X_LINE_SIGNATURE'
   end

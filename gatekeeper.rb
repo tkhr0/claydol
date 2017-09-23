@@ -31,8 +31,7 @@ class Gatekeeper
     end
 
     @adapters.concat Adapter.adapters.map.with_index { |adapter_class, idx|
-      adapter = adapter_class.new
-      adapter.hash = Digest::MD5.digest pathes[idx]  # for response
+      adapter = adapter_class.new Digest::MD5.digest(pathes[idx])  # for response
       adapter
     }
   end
