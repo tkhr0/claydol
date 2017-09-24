@@ -8,6 +8,10 @@ gem "rack-parser", require: "rack/parser"
 gem "faraday"
 gem "dotenv"
 
+gem "sidekiq"
+gem "redis"
+gem "redis-namespace"
+
 gem "minitest"
 
 gem "pry"

@@ -3,6 +3,8 @@ GEM
   specs:
     byebug (9.0.6)
     coderay (1.1.1)
+    concurrent-ruby (1.0.5)
+    connection_pool (2.2.1)
     dotenv (2.2.1)
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
@@ -19,7 +21,17 @@ GEM
     rack (2.0.3)
     rack-parser (0.7.0)
       rack
+    rack-protection (2.0.0)
+      rack
     rake (12.0.0)
+    redis (3.3.3)
+    redis-namespace (1.5.3)
+      redis (~> 3.0, >= 3.0.4)
+    sidekiq (5.0.4)
+      concurrent-ruby (~> 1.0)
+      connection_pool (~> 2.2, >= 2.2.0)
+      rack-protection (>= 1.5.0)
+      redis (~> 3.3, >= 3.3.3)
     slop (3.6.0)
 
 PLATFORMS
@@ -34,6 +46,9 @@ DEPENDENCIES
   rack
   rack-parser
   rake
+  redis
+  redis-namespace
+  sidekiq
 
 BUNDLED WITH
-   1.15.3
+   1.15.4

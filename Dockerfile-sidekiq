@@ -1,0 +1,10 @@
+FROM ruby:2.4
+WORKDIR /myapp
+
+ADD Gemfile .
+ADD Gemfile.lock .
+
+RUN bundle install
+
+#CMD ["bundle", "exec", "sidekiq", "-r", "./gatekeeper.rb"]
+CMD ["irb"]

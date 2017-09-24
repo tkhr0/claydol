@@ -1,0 +1,24 @@
+version: "3"
+services:
+  app:
+    build: .
+    links:
+      - sidekiq
+    ports:
+      - "9292:9292"
+    volumes:
+      - .:/myapp
+    tty: true
+  redis:
+    image: redis:4
+    ports:
+        - "6379:6379"
+  sidekiq:
+    build:
+      context: .
+      dockerfile: "Dockerfile-sidekiq"
+    links:
+      - redis
+    volumes:
+      - .:/myapp
+    tty: true
