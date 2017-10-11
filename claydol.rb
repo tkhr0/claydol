@@ -7,7 +7,8 @@ require 'rack/query_parser'
 require 'json'
 require 'faraday'
 require 'dotenv'
-require './gatekeeper'
+require_relative 'gatekeeper'
+require_relative 'worker/distribute_worker'
 
 require 'pry'
 
@@ -17,9 +18,9 @@ Dotenv.load ".env"
 class Claydol
 
   def initialize
+    Gatekeeper.load_adapters
+    Gatekeeper.load_golems
     @gatekeeper = Gatekeeper.new
-    @gatekeeper.load_adapters
-    @gatekeeper.load_golems
   end
 
   def call(env)
@@ -32,16 +33,20 @@ class Claydol
 
 
     if req.post?
-      params = req.params
-      params.freeze
-      @gatekeeper.listen req.env, params
+      env = req.env.clone
+      params = req.params.clone
+      # data = {
+      #   env: env,
+      #   params: params
+      # }
+
+      @gatekeeper.listen env, params
+      DistributeWorker.perform_async
 
     elsif req.get?
       query_parser = Rack::QueryParser.make_default 10, 10
       p query_parser.parse_nested_query req.query_string
     end
-
-    @gatekeeper.main
 
     res = Rack::Response.new { |r|
       r.status = 200

@@ -33,6 +33,20 @@ class Synapse
     @data[:token]
   end
 
+  def to_kv_array
+    [
+      'message', message,
+      'response', response,
+      'token', token,
+    ]
+  end
+
+  def from_hash hash
+    self.message = hash['message']
+    self.response = hash['response']
+    self.token = hash['token']
+  end
+
   private
 
   def trace synapse
