@@ -20,7 +20,7 @@ class SendWorker
   include Sidekiq::Worker
 
   def initialize
-    Gatekeeper.load_golems
+    Gatekeeper.load_adapters
     @gatekeeper = Gatekeeper.new
   end
 

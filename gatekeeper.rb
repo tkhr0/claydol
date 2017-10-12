@@ -54,7 +54,7 @@ class Gatekeeper
     end
 
     @@adapters.concat Adapter.adapters.map.with_index { |adapter_class, idx|
-      adapter = adapter_class.new Digest::MD5.digest(pathes[idx])  # for response
+      adapter = adapter_class.new Digest::MD5.hexdigest(pathes[idx])  # for response
       adapter
     }
   end
@@ -133,7 +133,7 @@ class Gatekeeper
 
   def talk synapse
     @@adapters.each do |adapter|
-      if adapter.hash.equal? synapse.adapter
+      if adapter.hash == synapse.adapter
         adapter.talk synapse
         break
       end

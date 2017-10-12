@@ -38,6 +38,7 @@ class Synapse
       'message', message,
       'response', response,
       'token', token,
+      'adapter', adapter,
     ]
   end
 
@@ -45,6 +46,7 @@ class Synapse
     self.message = hash['message']
     self.response = hash['response']
     self.token = hash['token']
+    self.adapter = hash['adapter']
   end
 
   private
