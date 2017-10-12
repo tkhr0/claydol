@@ -2,8 +2,6 @@ require 'sidekiq'
 require_relative '../gatekeeper'
 require_relative './send_worker'
 
-require 'pry'
-
 Sidekiq.configure_client do |config|
   config.redis = {
     url: "redis://redis:6379/12",

@@ -21,19 +21,6 @@ class Gatekeeper
     @@adapters
   end
 
-  def self.inqueue
-    @@incoming_queue
-  end
-
-  def self.outqueue
-    @@outgoing_queue
-  end
-
-  def queues
-    p @@incoming_queue
-    p @@outgoing_queue
-  end
-
   def self.load_golems
     Dir.glob('./golem/*.rb').each do |golem|
       next if golem == './golem/golem.rb'
@@ -59,40 +46,7 @@ class Gatekeeper
     }
   end
 
-  # def perform env, params
-  #   incoming_synapses = []
-  #   outgoing_synapses = []
-  #
-  #   @@adapters.each do |adapter|
-  #     if adapter.filter extruct_env(env, adapter.require_envs)
-  #       incoming_synapses << adapter.listen(params)
-  #     end
-  #   end
-  #
-  #   incoming_synapses.each do |synapse|
-  #     outgoing_synapses.concat distribute(synapse)
-  #   end
-  #
-  #   outgoing_synapses.each do |synapse|
-  #     talk synapse
-  #   end
-  # end
-
-  # def main
-  #   while !@@incoming_queue.empty?
-  #     synapse = @@incoming_queue.shift
-  #     @@outgoing_queue.concat distribute(synapse)
-  #   end
-  #
-  #   while !@@outgoing_queue.empty?
-  #     synapse = @@outgoing_queue.shift
-  #     talk synapse
-  #   end
-  # end
-
   def perform_distribute
-    p "perform_distribute"
-
     id = @receive_model.pop
     if id.nil?
       return
@@ -113,7 +67,6 @@ class Gatekeeper
     p "perform_send"
 
     id = @send_model.pop
-    p id
     if id.nil?
       return
     end
